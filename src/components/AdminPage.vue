@@ -1,0 +1,76 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useProductStore } from '../stores/ProductStore'
+import type { Product } from '@/types'
+import ModalWindow from './admin-page/ModalWindow.vue'
+const productStore = useProductStore()
+
+const headers = [...Object.keys(productStore.products[0]), 'Actions'].filter(
+  (el) => el !== 'conversion'
+)
+const openModal = ref(false)
+const product = ref('')
+//COMPUTED
+const changeCurrentProduct = (element: Product) => {
+  openModal.value = true
+  product.value = element
+}
+const deleteProduct = (element: Product) => {
+  productStore.deleteProduct(element)
+}
+const newProduct = () => {
+  openModal.value = true
+}
+const closeModalWindow = () => {
+  openModal.value = false
+}
+const productList = computed(() =>
+  productStore.getProductList.map(({ conversion, ...items }) => ({
+    ...items
+  }))
+)
+</script>
+
+<template>
+  <h1>ADMIN PANEL</h1>
+  <v-row>
+    <v-col cols="6">
+      <div class="admin-table">
+        <div class="admin-table__header d-flex justify-space-between">
+          <h2>Tabelia produktów</h2>
+          <v-btn @click="newProduct()">Nowy produkt</v-btn>
+        </div>
+
+        <table style="width: 100%" class="mt-2">
+          <tr>
+            <th v-for="head in headers" :key="`key-${head}`" class="font-weight-bold">
+              {{ head }}
+            </th>
+          </tr>
+          <tr v-for="item in productList" :key="`key-${item.id}`">
+            <td v-for="el in Object.values(item)" :key="el">{{ el }}</td>
+            <td class="d-flex justify-space-around">
+              <v-btn color="blue" @click="changeCurrentProduct(item)">ZMIEŃ</v-btn>
+              <v-btn color="red" @click="deleteProduct(item)">USUŃ</v-btn>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </v-col>
+    <ModalWindow :closeModal="closeModalWindow" :openModal="openModal" :product="product" />
+  </v-row>
+</template>
+
+<style scoped lang="scss">
+.admin-table {
+  &__sort {
+    border: 1px solid black;
+    border-radius: 5%;
+  }
+}
+table,
+th,
+td {
+  border: 1px solid black;
+}
+</style>
