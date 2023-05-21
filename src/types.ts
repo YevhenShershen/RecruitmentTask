@@ -1,8 +1,13 @@
 export type Product = {
   id: String
   name: String
-  category: boolean
+  category: String
   price: number
   animal: String
+  conversion?: number
 }
-//category: true i false; true = domki na drzewach, false = domki na ziemi
+
+export type Currencies = {
+  course: number
+  value: String
+}
