@@ -4,60 +4,82 @@ import type { Product } from '@/types'
 import { useProductStore } from '../../stores/ProductStore'
 import { useAnimalStore } from '../../stores/AnimalStore'
 import SelectComponent from '../SelectComponent.vue'
+
 type PropsType = {
   product: Product
-  openModal: boolean
   closeModal: () => void
 }
 const productStore = useProductStore()
-const newProduct = ref({
-  id: 0,
-  name: '',
-  category: '',
-  price: '',
-  animal: ''
-})
+
 const animalStore = useAnimalStore()
 const props = defineProps<PropsType>()
 const modalTitle = ref('')
-const showModalWindow = computed(() => (props.openModal ? 'block' : 'none'))
-const isProduct = computed(() => (props.product.name ? true : false))
-const onSubmit = (e) => {
-  const { name, category, animal, price } = e.target.elements
+
+const isProduct = computed(() => (props.product?.name ? true : false))
+const propsProduct = ref({
+  name: isProduct ? props.product.name : '',
+  category: isProduct ? props.product.category : '',
+  price: isProduct ? props.product.price : '',
+  animal: isProduct ? props.product.animal : ''
+})
+//UPDATE DATA
+const getSelectCategory = (item: string) => (propsProduct.value.category = item)
+const getSelectAnimal = (item: string) => (propsProduct.value.animal = item)
+const showModalTitle = computed(
+  () => (modalTitle.value = props.product?.name ? 'Modyfikuj dane produktu' : 'Dodaj Nowy produkt')
+)
+const addProduct = () => {
+  if (
+    Object.values(propsProduct.value)
+      .map((el) => !!el)
+      .some((e) => e === false)
+  )
+    return
   productStore.addProduct({
     id: window.crypto.randomUUID(),
-    name: name.value,
-    category: category.value,
-    animal: animal.value,
-    price: price.value
+    name: propsProduct.value.name,
+    category: propsProduct.value.category,
+    price: +propsProduct.value.price,
+    animal: propsProduct.value.animal
   })
+  resetPropsProduct()
+  props.closeModal()
 }
-//UPDATE DATA
-const getSelectCategory = (item) => {
-  return (newProduct.category = item)
+const onUpdate = () => {
+  productStore.changeProduct({
+    id: props.product.id,
+    name: propsProduct.value.name,
+    category: propsProduct.value.category,
+    price: +propsProduct.value.price,
+    animal: propsProduct.value.animal
+  })
+  resetPropsProduct()
+  props.closeModal()
 }
-const getSelectAnimal = (item) => {
-  return (newProduct.animal = item)
+const resetPropsProduct = () => {
+  propsProduct.value = {
+    name: '',
+    category: '',
+    price: '',
+    animal: ''
+  }
 }
-const showModalTitle = computed(
-  () => (modalTitle.value = props.product.name ? 'Modyfikuj dane produktu' : 'Dodaj Nowy produkt')
-)
 </script>
 
 <template>
-  <div id="myModal" :class="'modal d-' + showModalWindow">
+  <div id="myModal" class="modal d-block">
     <div class="modal-content">
       <div class="d-flex justify-space-between">
         <h2>{{ showModalTitle }}</h2>
         <button class="close" @click="closeModal()">&times;</button>
       </div>
-      <form class="d-flex flex-column" @submit.prevent="onSubmit">
+      <div class="d-flex flex-column">
         <v-text-field
           name="name"
           label="Nazwa produktu:"
           type="text"
           hide-details="auto"
-          v-model="newProduct.name"
+          v-model.trim="propsProduct.name"
           required
         ></v-text-field>
         <v-text-field
@@ -65,7 +87,7 @@ const showModalTitle = computed(
           label="Cena:"
           type="number"
           hide-details="auto"
-          v-model="newProduct.price"
+          v-model.number="propsProduct.price"
           required
         ></v-text-field>
         <SelectComponent
@@ -73,17 +95,17 @@ const showModalTitle = computed(
           :label="'kategorije'"
           :items="productStore.categories"
           @return-current-item="getSelectCategory"
-          required
         />
         <SelectComponent
           name="animal"
           :label="'Nazwa zwierzęcia'"
           :items="animalStore.animals"
           @return-current-item="getSelectAnimal"
-          required
         />
-        <v-btn type="submit">{{ isProduct ? 'zmienić' : 'dodaj' }}</v-btn>
-      </form>
+        <v-btn type="submit" @click="isProduct ? onUpdate() : addProduct()">{{
+          isProduct ? 'zmienić' : 'dodaj'
+        }}</v-btn>
+      </div>
     </div>
   </div>
 </template>

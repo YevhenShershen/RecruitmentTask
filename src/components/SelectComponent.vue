@@ -8,10 +8,10 @@ const props = defineProps<PropTypes>()
 const emit = defineEmits<{
   (e: 'return-current-item', item: String): void
 }>()
+const currentItem = ref('')
 const returnItem = () => {
   emit('return-current-item', currentItem.value)
 }
-const currentItem = ref('')
 </script>
 <template>
   <v-select

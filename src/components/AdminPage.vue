@@ -22,6 +22,12 @@ const newProduct = () => {
   openModal.value = true
 }
 const closeModalWindow = () => {
+  product.value = {
+    name: '',
+    category: '',
+    price: '',
+    animal: ''
+  }
   openModal.value = false
 }
 const productList = computed(() =>
@@ -32,15 +38,14 @@ const productList = computed(() =>
 </script>
 
 <template>
-  <h1>ADMIN PANEL</h1>
-  <v-row>
-    <v-col cols="6">
+  <v-row class="d-flex align-center justify-center">
+    <v-col cols="10" sm="8" md="6">
       <div class="admin-table">
+        <h1>ADMIN PANEL</h1>
         <div class="admin-table__header d-flex justify-space-between">
           <h2>Tabelia produktów</h2>
           <v-btn @click="newProduct()">Nowy produkt</v-btn>
         </div>
-
         <table style="width: 100%" class="mt-2">
           <tr>
             <th v-for="head in headers" :key="`key-${head}`" class="font-weight-bold">
@@ -56,8 +61,13 @@ const productList = computed(() =>
           </tr>
         </table>
       </div>
+      <ModalWindow
+        v-if="openModal"
+        :closeModal="closeModalWindow"
+        :openModal="openModal"
+        :product="product"
+      />
     </v-col>
-    <ModalWindow :closeModal="closeModalWindow" :openModal="openModal" :product="product" />
   </v-row>
 </template>
 
