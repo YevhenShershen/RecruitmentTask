@@ -1,13 +1,18 @@
 export type Product = {
-  id: String
-  name: String
-  category: String
+  id: string
+  name: string
+  category: string
   price: number
-  animal: String
+  animal: string
   conversion?: number
 }
 
 export type Currencies = {
   course: number
-  value: String
+  value: string
+}
+export type Animals = {
+  CAT: string
+  DOG: string
+  BIRD: string
 }
