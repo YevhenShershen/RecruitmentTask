@@ -3,15 +3,18 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav class="d-flex justify-center">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/admin">Admin</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <v-row class="d-flex align-center justify-center">
+    <v-col cols="12" sm="8" md="6">
+      <header>
+        <div class="wrapper">
+          <nav class="d-flex justify-center">
+            <RouterLink to="/">Home</RouterLink>
+            <RouterLink to="/admin">Admin</RouterLink>
+          </nav>
+        </div>
+      </header>
+    </v-col>
+  </v-row>
   <RouterView />
 </template>
 

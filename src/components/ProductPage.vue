@@ -39,7 +39,7 @@ const unwrappinElement = (text: String, items) => [
   }))
 ]
 const changeCurrencies = () => productStore.changeCurrencies(selectCurrency.value)
-const selectAnimalsItems = unwrappinElement('All', animalStore.animals)
+const selectAnimalsItems = unwrappinElement('All', Object.values(animalStore.animals))
 const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
 //COMPUTED
 const productList = computed(() => productStore.getProductList)
@@ -54,18 +54,17 @@ const filteredProductList = computed(() =>
 </script>
 
 <template>
-  <div class="product-page mx-5">
-    <v-row>
-      <v-col cols="3">
-        <input
-          class="product-page__filter w-100"
+  <v-row class="d-flex align-center justify-center">
+    <v-col cols="10" sm="8" md="6">
+      <div class="product-page mx-5">
+        <v-text-field
+          label="wyszukaj produkt"
           type="text"
-          placeholder="wyszukaj produkt"
+          hide-details="auto"
           v-model="filterProductText"
-        />
+        ></v-text-field>
         <h2>Wybież kategorije domków{{ test }}</h2>
-      </v-col>
-      <v-col cols="3">
+
         <v-select
           v-model="selectCurrency"
           :items="currency"
@@ -86,15 +85,15 @@ const filteredProductList = computed(() =>
           label="animals"
           required
         ></v-select>
-      </v-col>
-    </v-row>
-    <ProductTable
-      :currency="selectCurrency"
-      :convertMoney="selectCurrency"
-      :products="filteredProductList"
-      @sort-product-price="sortProductPrice"
-    />
-  </div>
+        <ProductTable
+          :currency="selectCurrency"
+          :convertMoney="selectCurrency"
+          :products="filteredProductList"
+          @sort-product-price="sortProductPrice"
+        />
+      </div>
+    </v-col>
+  </v-row>
 </template>
 
 <style scoped lang="scss">

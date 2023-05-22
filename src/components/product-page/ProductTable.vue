@@ -22,31 +22,27 @@ onMounted(() => {})
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="6">
-      <div class="product-table">
-        <div class="product-table__header d-flex justify-space-between">
-          <h2>Tabelia produktów</h2>
-          <button class="product-table__sort px-2" @click="sortProductPrice">
-            Sortowanie Ceny {{ price }}
-          </button>
-        </div>
+  <div class="product-table">
+    <div class="product-table__header d-flex justify-space-between">
+      <h2>Tabelia produktów</h2>
+      <button class="product-table__sort px-2" @click="sortProductPrice">
+        Sortowanie Ceny {{ price }}
+      </button>
+    </div>
 
-        <table style="width: 100%" class="mt-2">
-          <tr>
-            <th v-for="head in headers" :key="`key-${head}`" class="font-weight-bold">
-              {{ head }}
-            </th>
-          </tr>
-          <tr v-for="item in props.products" :key="`key-${item.id}`">
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.conversion || item.price }} {{ currency }}</td>
-          </tr>
-        </table>
-      </div>
-    </v-col>
-  </v-row>
+    <table style="width: 100%" class="mt-2">
+      <tr>
+        <th v-for="head in headers" :key="`key-${head}`" class="font-weight-bold">
+          {{ head }}
+        </th>
+      </tr>
+      <tr v-for="item in props.products" :key="`key-${item.id}`">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.conversion || item.price }} {{ currency }}</td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <style scoped lang="scss">
