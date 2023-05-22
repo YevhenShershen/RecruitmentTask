@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
-
-type AnimalList = {
-  animals: String[]
+import { ANIMALS } from '../constants/constants'
+import type { Animals } from '@/types'
+type ProductList = {
+  animals: Animals
 }
-export const useAnimalStore = defineStore('DishStore', {
-  state: (): AnimalList => ({
-    animals: ['Ptaszki', 'Kot', 'Pies']
+export const useAnimalStore = defineStore('animalsStore', {
+  state: (): ProductList => ({
+    animals: ANIMALS
   })
 })

@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import type { Product, Currencies } from '@/types'
-import CATEGORIES from '../enums/categories'
-import CURRENCIES from '../enums/currencies'
+import { CATEGORIES, ANIMALS } from '../constants/constants'
+import CURRENCIES from '../constants/currencies'
+
 type ProductList = {
   products: Product[]
   currencies: Currencies[]
@@ -15,49 +16,49 @@ export const useProductStore = defineStore('ProductStore', {
         name: 'Podwójny dom dla kotów',
         category: CATEGORIES.EARTH_HOUSES,
         price: 55,
-        animal: 'Kot'
+        animal: ANIMALS.CAT
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Wielki dom dla psów',
         category: CATEGORIES.TREE_HOUSES,
         price: 77,
-        animal: 'Pies'
+        animal: ANIMALS.DOG
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla ptaka',
         category: CATEGORIES.TREE_HOUSES,
         price: 55.03,
-        animal: 'Ptaszki'
+        animal: ANIMALS.BIRD
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla małego pieska',
         category: CATEGORIES.EARTH_HOUSES,
         price: 77,
-        animal: 'Pies'
+        animal: ANIMALS.DOG
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Plastikowy dom',
         category: CATEGORIES.TREE_HOUSES,
         price: 55.6,
-        animal: 'Kot'
+        animal: ANIMALS.CAT
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla małych ptaków',
         category: CATEGORIES.EARTH_HOUSES,
         price: 7,
-        animal: 'Ptaszki'
+        animal: ANIMALS.BIRD
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Domek w górach dla ptaka VIP',
         category: CATEGORIES.EARTH_HOUSES,
         price: 27,
-        animal: 'Ptaszki'
+        animal: ANIMALS.BIRD
       }
     ],
     currencies: CURRENCIES,
@@ -86,5 +87,11 @@ export const useProductStore = defineStore('ProductStore', {
         return item.id !== product.id
       })
     },
+    changeProduct(product: Product) {
+      let idItem = this.products.findIndex((item) => item.id === product.id)
+      console.log(idItem)
+      this.products.splice(idItem, 1, product)
+      console.log(product)
+    }
   }
 })
