@@ -22,6 +22,7 @@ const deleteProduct = (element: Product): void => {
 const newProduct = (): void => {
   showModal.value = true
 }
+
 const closeModalWindow = (): void => {
   product.value = {
     name: '',

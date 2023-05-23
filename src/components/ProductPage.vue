@@ -26,7 +26,7 @@ const sortProductPrice = (sort: boolean): Product[] => {
     return productStore.getPriceDown
   }
 }
-const resetSelectAnimal = () => (selectAnimal.value = '')
+const resetSelectAnimal = (): string => (selectAnimal.value = '')
 
 const unwrappinElement = (text: string, items: any): string[] => [
   { title: text, value: '' },
@@ -35,7 +35,9 @@ const unwrappinElement = (text: string, items: any): string[] => [
     value: item
   }))
 ]
-const changeCurrencies = (): void => productStore.changeCurrencies(selectCurrency.value)
+const changeCurrencies = () => {
+  productStore.changeCurrencies(selectCurrency.value)
+}
 const selectAnimalsItems = unwrappinElement('All', productStore.animals)
 const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
 //COMPUTED

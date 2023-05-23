@@ -20,16 +20,28 @@ const propsProduct = ref({
   animal: isProduct ? props.product.animal : ''
 })
 //UPDATE DATA
-const getSelectCategory = (item: string) => (propsProduct.value.category = item)
-const getSelectAnimal = (item: string) => (propsProduct.value.animal = item)
+const getSelectCategory = (item: string): void => {
+  propsProduct.value.category = item
+}
+const getSelectAnimal = (item: string): void => {
+  propsProduct.value.animal = item
+}
 const showModalTitle = computed(
   () => (modalTitle.value = props.product?.name ? 'Modyfikuj dane produktu' : 'Dodaj Nowy produkt')
 )
-const addProduct = () => {
+const resetPropsProduct = (): void => {
+  propsProduct.value = {
+    name: '',
+    category: '',
+    price: '',
+    animal: ''
+  }
+}
+const addProduct = (): void => {
   if (
     Object.values(propsProduct.value)
-      .map((el) => !!el)
-      .some((e) => e === false)
+      .map((el: string) => !!el)
+      .some((e: boolean) => e === false)
   )
     return
   productStore.addProduct({
@@ -42,7 +54,7 @@ const addProduct = () => {
   resetPropsProduct()
   props.closeModal()
 }
-const onUpdate = () => {
+const onUpdate = (): void => {
   productStore.changeProduct({
     id: props.product.id,
     name: propsProduct.value.name,
@@ -52,14 +64,6 @@ const onUpdate = () => {
   })
   resetPropsProduct()
   props.closeModal()
-}
-const resetPropsProduct = () => {
-  propsProduct.value = {
-    name: '',
-    category: '',
-    price: '',
-    animal: ''
-  }
 }
 </script>
 
