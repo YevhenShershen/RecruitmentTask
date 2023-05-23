@@ -1,25 +1,23 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useProductStore } from '../stores/ProductStore'
-import { useAnimalStore } from '../stores/AnimalStore'
 import type { Product } from '@/types'
 import SelectComponent from './SelectComponent.vue'
 import ProductTable from './product-page/ProductTable.vue'
 
 //VAR
 const productStore = useProductStore()
-const animalStore = useAnimalStore()
 const selectCategory = ref('')
 const filterProductText = ref('')
-const test = ref('')
 const currency = productStore.currencies.map((item) => {
   return item.value
 })
 const selectCurrency = ref('zł')
 const selectAnimal = ref('')
 //METHODS
-const getSelectCategory = (item) => {
+const getSelectCategory = (item: string) => {
   resetSelectAnimal()
+  console.log(selectCategory.value)
   return (selectCategory.value = item)
 }
 const sortProductPrice = (sort: boolean): Product[] => {
@@ -29,9 +27,9 @@ const sortProductPrice = (sort: boolean): Product[] => {
     return productStore.getPriceDown
   }
 }
-const resetSelectAnimal = () => (selectAnimal.value = '')
+const resetSelectAnimal = (): string => (selectAnimal.value = '')
 
-const unwrappinElement = (text: String, items) => [
+const unwrappinElement = (text: string, items) => [
   { title: text, value: '' },
   ...items.map((item) => ({
     title: item,
@@ -39,7 +37,7 @@ const unwrappinElement = (text: String, items) => [
   }))
 ]
 const changeCurrencies = () => productStore.changeCurrencies(selectCurrency.value)
-const selectAnimalsItems = unwrappinElement('All', Object.values(animalStore.animals))
+const selectAnimalsItems = unwrappinElement('All', productStore.animals)
 const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
 //COMPUTED
 const productList = computed(() => productStore.getProductList)
@@ -63,7 +61,7 @@ const filteredProductList = computed(() =>
           hide-details="auto"
           v-model="filterProductText"
         ></v-text-field>
-        <h2>Wybież kategorije domków{{ test }}</h2>
+        <h2>Wybież kategorije domków</h2>
 
         <v-select
           v-model="selectCurrency"

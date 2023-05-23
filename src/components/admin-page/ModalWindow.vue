@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue'
 import type { Product } from '@/types'
 import { useProductStore } from '../../stores/ProductStore'
-import { useAnimalStore } from '../../stores/AnimalStore'
 import SelectComponent from '../SelectComponent.vue'
 
 type PropsType = {
@@ -10,8 +9,6 @@ type PropsType = {
   closeModal: () => void
 }
 const productStore = useProductStore()
-
-const animalStore = useAnimalStore()
 const props = defineProps<PropsType>()
 const modalTitle = ref('')
 
@@ -99,7 +96,7 @@ const resetPropsProduct = () => {
         <SelectComponent
           name="animal"
           :label="'Nazwa zwierzęcia'"
-          :items="animalStore.animals"
+          :items="productStore.animals"
           @return-current-item="getSelectAnimal"
         />
         <v-btn type="submit" @click="isProduct ? onUpdate() : addProduct()">{{

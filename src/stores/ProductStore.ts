@@ -6,7 +6,8 @@ import CURRENCIES from '../constants/currencies'
 type ProductList = {
   products: Product[]
   currencies: Currencies[]
-  categories: Object
+  categories: string[]
+  animals: string[]
 }
 export const useProductStore = defineStore('ProductStore', {
   state: (): ProductList => ({
@@ -62,7 +63,8 @@ export const useProductStore = defineStore('ProductStore', {
       }
     ],
     currencies: CURRENCIES,
-    categories: Object.values(CATEGORIES)
+    categories: Object.values(CATEGORIES),
+    animals: Object.values(ANIMALS)
   }),
   getters: {
     getProductList: (state: ProductList): Product[] => state.products,
