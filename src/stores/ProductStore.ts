@@ -65,12 +65,14 @@ export const useProductStore = defineStore('ProductStore', {
     categories: Object.values(CATEGORIES)
   }),
   getters: {
-    getProductList: (state) => state.products,
-    getPricetUp: (state) => state.products.sort((a, b) => (a.price > b.price ? 1 : -1)),
-    getPriceDown: (state) => state.products.sort((a, b) => (b.price > a.price ? 1 : -1))
+    getProductList: (state: ProductList): Product[] => state.products,
+    getPricetUp: (state: ProductList): Product[] =>
+      state.products.sort((a, b) => (a.price > b.price ? 1 : -1)),
+    getPriceDown: (state: ProductList): Product[] =>
+      state.products.sort((a, b) => (b.price > a.price ? 1 : -1))
   },
   actions: {
-    changeCurrencies(currency: String) {
+    changeCurrencies(currency: String): void {
       const changeCurrency = this.currencies.find((el) => el.value === currency)
       this.products = this.products.map(({ price, ...items }) => ({
         ...items,
@@ -79,15 +81,15 @@ export const useProductStore = defineStore('ProductStore', {
           changeCurrency?.course === 0 ? price : (price * changeCurrency?.course).toFixed(2)
       }))
     },
-    addProduct(product: Product) {
+    addProduct(product: Product): void {
       this.products.push(product)
     },
-    deleteProduct(product: Product) {
+    deleteProduct(product: Product): void {
       this.products = this.products.filter((item: Product) => {
         return item.id !== product.id
       })
     },
-    changeProduct(product: Product) {
+    changeProduct(product: Product): void {
       let idItem = this.products.findIndex((item) => item.id === product.id)
       console.log(idItem)
       this.products.splice(idItem, 1, product)
