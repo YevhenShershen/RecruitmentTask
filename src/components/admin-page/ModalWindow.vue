@@ -33,8 +33,8 @@ const resetPropsProduct = (): void => {
   propsProduct.value = {
     name: '',
     category: '',
-    price: '',
-    animal: ''
+    animal: '',
+    price: ''
   }
 }
 const addProduct = (): void => {
