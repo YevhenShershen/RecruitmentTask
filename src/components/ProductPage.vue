@@ -15,9 +15,8 @@ const currency = productStore.currencies.map((item) => {
 const selectCurrency = ref('zł')
 const selectAnimal = ref('')
 //METHODS
-const getSelectCategory = (item: string) => {
+const getSelectCategory = (item: string): string => {
   resetSelectAnimal()
-  console.log(selectCategory.value)
   return (selectCategory.value = item)
 }
 const sortProductPrice = (sort: boolean): Product[] => {
@@ -27,16 +26,16 @@ const sortProductPrice = (sort: boolean): Product[] => {
     return productStore.getPriceDown
   }
 }
-const resetSelectAnimal = (): string => (selectAnimal.value = '')
+const resetSelectAnimal = () => (selectAnimal.value = '')
 
-const unwrappinElement = (text: string, items) => [
+const unwrappinElement = (text: string, items: any): string[] => [
   { title: text, value: '' },
-  ...items.map((item) => ({
+  ...items.map((item: string) => ({
     title: item,
     value: item
   }))
 ]
-const changeCurrencies = () => productStore.changeCurrencies(selectCurrency.value)
+const changeCurrencies = (): void => productStore.changeCurrencies(selectCurrency.value)
 const selectAnimalsItems = unwrappinElement('All', productStore.animals)
 const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
 //COMPUTED

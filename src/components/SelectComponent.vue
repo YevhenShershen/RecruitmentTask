@@ -6,10 +6,10 @@ type PropTypes = {
 }
 const props = defineProps<PropTypes>()
 const emit = defineEmits<{
-  (e: 'return-current-item', item: String): void
+  (e: 'return-current-item', item: string): void
 }>()
 const currentItem = ref('')
-const returnItem = () => {
+const selectItem = (): void => {
   emit('return-current-item', currentItem.value)
 }
 </script>
@@ -19,6 +19,6 @@ const returnItem = () => {
     :items="props.items"
     :label="props.label"
     required
-    @update:modelValue="returnItem()"
+    @update:modelValue="selectItem()"
   ></v-select>
 </template>
