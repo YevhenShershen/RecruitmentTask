@@ -8,27 +8,28 @@ const productStore = useProductStore()
 const headers = [...Object.keys(productStore.products[0]), 'Actions'].filter(
   (el) => el !== 'conversion'
 )
-const openModal = ref(false)
+const showModal = ref(false)
 const product = ref('')
 //COMPUTED
-const changeCurrentProduct = (element: Product) => {
-  openModal.value = true
+const changeCurrentProduct = (element: Product): void => {
+  console.log(element)
+  showModal.value = true
   product.value = element
 }
-const deleteProduct = (element: Product) => {
+const deleteProduct = (element: Product): void => {
   productStore.deleteProduct(element)
 }
-const newProduct = () => {
-  openModal.value = true
+const newProduct = (): void => {
+  showModal.value = true
 }
-const closeModalWindow = () => {
+const closeModalWindow = (): void => {
   product.value = {
     name: '',
     category: '',
     price: '',
     animal: ''
   }
-  openModal.value = false
+  showModal.value = false
 }
 const productList = computed(() =>
   productStore.getProductList.map(({ conversion, ...items }) => ({
@@ -61,12 +62,7 @@ const productList = computed(() =>
           </tr>
         </table>
       </div>
-      <ModalWindow
-        v-if="openModal"
-        :closeModal="closeModalWindow"
-        :openModal="openModal"
-        :product="product"
-      />
+      <ModalWindow v-if="showModal" :closeModal="closeModalWindow" :product="product" />
     </v-col>
   </v-row>
 </template>
