@@ -12,7 +12,7 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../components/AdminPage.vue')
-    }
+    },
   ]
 })
 
