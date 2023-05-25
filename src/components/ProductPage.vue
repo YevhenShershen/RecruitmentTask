@@ -4,7 +4,6 @@ import { useProductStore } from '../stores/ProductStore'
 import type { Product } from '@/types'
 import SelectComponent from './SelectComponent.vue'
 import ProductTable from './product-page/ProductTable.vue'
-
 //VAR
 const productStore = useProductStore()
 const selectCategory = ref('')
@@ -35,7 +34,8 @@ const unwrappinElement = (text: string, items: any): string[] => [
     value: item
   }))
 ]
-const changeCurrencies = () => {
+const changeCurrencies = (selectItem: string) => {
+  selectCurrency.value = selectItem
   productStore.changeCurrencies(selectCurrency.value)
 }
 const selectAnimalsItems = unwrappinElement('All', productStore.animals)
@@ -48,49 +48,38 @@ const filteredProductList = computed(() =>
     .filter(({ name }) => name.toLowerCase().includes(filterProductText.value.toLowerCase()))
     .filter(({ animal }) => animal.includes(selectAnimal.value))
 )
-
 //HOOKS
 </script>
 
 <template>
   <v-row class="d-flex align-center justify-center">
     <v-col cols="10" sm="8" md="6">
-      <div class="product-page mx-5">
-        <v-text-field
-          label="wyszukaj produkt"
-          type="text"
-          hide-details="auto"
-          v-model="filterProductText"
-        ></v-text-field>
-        <h2>Wybież kategorije domków</h2>
-
-        <v-select
-          v-model="selectCurrency"
-          :items="currency"
-          label="waluta"
-          class="product-page__currency"
-          @update:modelValue="changeCurrencies()"
-          required
-        ></v-select>
-        <SelectComponent
-          :label="'kategorije'"
-          :items="selectCategoryItems"
-          @return-current-item="getSelectCategory"
-        />
-        <v-select
-          v-if="selectCategory"
-          v-model="selectAnimal"
-          :items="selectAnimalsItems"
-          label="animals"
-          required
-        ></v-select>
-        <ProductTable
-          :currency="selectCurrency"
-          :convertMoney="selectCurrency"
-          :products="filteredProductList"
-          @sort-product-price="sortProductPrice"
-        />
-      </div>
+      <v-text-field
+        label="wyszukaj produkt"
+        type="text"
+        hide-details="auto"
+        v-model="filterProductText"
+      ></v-text-field>
+      <h2>Wybież kategorije domków</h2>
+      <SelectComponent :label="'waluta'"
+      :items="currency" @update:modelValue="changeCurrencies" />
+      <SelectComponent
+        :label="'kategorije'"
+        :items="selectCategoryItems"
+        @return-current-item="getSelectCategory"
+      />
+      <v-select
+        v-if="selectCategory"
+        v-model="selectAnimal"
+        :items="selectAnimalsItems"
+        label="animals"
+      ></v-select>
+      <ProductTable
+        :currency="selectCurrency"
+        :convertMoney="selectCurrency"
+        :products="filteredProductList"
+        @sort-product-price="sortProductPrice"
+      />
     </v-col>
   </v-row>
 </template>
