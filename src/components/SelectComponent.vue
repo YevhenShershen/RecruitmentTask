@@ -18,7 +18,6 @@ const selectItem = (): void => {
     v-model="currentItem"
     :items="props.items"
     :label="props.label"
-    required
     @update:modelValue="selectItem()"
   ></v-select>
 </template>
