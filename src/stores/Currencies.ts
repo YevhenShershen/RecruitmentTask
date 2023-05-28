@@ -25,5 +25,9 @@ export const useCurrencyStore = defineStore('CurrencyList', {
   getters: {
     getCurrenciesList: (state: CurrencyList): Currency[] => state.currencies
   },
-  actions: {}
+  actions: {
+    changeCurrentCurrency(item: string): void {
+      this.currentCurrency = item
+    }
+  }
 })

@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import type { Product } from '@/types'
 import { useRoute } from 'vue-router'
 import { useProductStore } from '../../stores/ProductStore'
+import { useCurrencyStore } from '../../stores/Currencies'
 import ModalWindow from '../admin-page/ModalWindow.vue'
 
 type PropTypes = {
@@ -15,6 +16,7 @@ const emit = defineEmits<{
 }>()
 //VAR
 const productStore = useProductStore()
+const currencyStore = useCurrencyStore()
 const sortProduct = ref(true)
 const price = ref('')
 const product = ref('')
@@ -41,6 +43,7 @@ const closeModalWindow = (): void => {
   showModal.value = false
 }
 //COMPUTED
+const currency = computed(() => currencyStore.currentCurrency)
 const observationPage = computed(() => ref(path.value === '/' ? false : true))
 const headers = ref(
   observationPage
@@ -61,7 +64,7 @@ const sortProductPrice = () => {
       <h2>Tabelia produktów</h2>
       <div class="d-flex">
         <v-btn class="product-table__sort px-2" @click="sortProductPrice">
-          Sortowanie Ceny {{ price }}
+          Sortowanie Ceny {{ price }}{{ currencyStore.currentCurrency }}
         </v-btn>
         <v-btn v-if="observationPage.value" @click="newProduct()">Nowy produkt</v-btn>
       </div>

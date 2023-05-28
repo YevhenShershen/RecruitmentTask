@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia'
 import type { Product, Currency } from '@/types'
 import { Categories, Animals } from '../enums/enums'
-import CURRENCIES from '../constants/currencies'
+import { useCurrencyStore } from './Currencies'
 type ProductList = {
   products: Product[]
   currencies: Currency[]
   categories: string[]
   animals: string[]
 }
+const currencyStore = useCurrencyStore()
 export const useProductStore = defineStore('ProductStore', {
   state: (): ProductList => ({
     products: [
@@ -61,7 +62,7 @@ export const useProductStore = defineStore('ProductStore', {
         animal: Animals.BIRD
       }
     ],
-    currencies: CURRENCIES,
+    currencies: currencyStore.getCurrenciesList,
     categories: Object.values(Categories),
     animals: Object.values(Animals)
   }),
@@ -73,7 +74,7 @@ export const useProductStore = defineStore('ProductStore', {
       state.products.sort((a, b) => (b.price > a.price ? 1 : -1))
   },
   actions: {
-    changeCurrencyProduct(currency: String): void {
+    changeCurrencyProduct(currency: string): void {
       const changeCurrency = this.currencies.find((el) => el.value === currency)
       this.products = this.products.map(({ price, ...items }) => ({
         ...items,

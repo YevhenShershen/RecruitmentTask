@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import type { Product } from '@/types'
 import { useProductStore } from '../../stores/ProductStore'
+import { useCurrencyStore } from '../../stores/Currencies'
 import SelectComponent from '../SelectComponent.vue'
 
 type PropsType = {
@@ -9,6 +10,7 @@ type PropsType = {
   closeModal: () => void
 }
 const productStore = useProductStore()
+const currencyStore = useCurrencyStore()
 const props = defineProps<PropsType>()
 const modalTitle = ref('')
 
@@ -44,6 +46,8 @@ const addProduct = (): void => {
       .some((e: boolean) => e === false)
   )
     return
+  currencyStore.changeCurrentCurrency('zł')
+  productStore.changeCurrencyProduct('zł')
   productStore.addProduct({
     id: window.crypto.randomUUID(),
     name: propsProduct.value.name,
