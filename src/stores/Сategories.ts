@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia'
 
-type CategoriesList = {
+type CategoryList = {
   categories: string[]
 }
 export const useCategoryStore = defineStore('CategoryStore', {
-  state: (): CategoriesList => ({
+  state: (): CategoryList => ({
     categories: ['Domki na drzewach', 'Domki na ziemi']
   }),
   getters: {
-    getCategoryList: (state: CategoriesList): string[] => state.categories
+    getCategoryList: (state: CategoryList): string[] => state.categories
   },
   actions: {
     addCategory(category: string): void {
-      this.categories.push(category)
+      if (!!category) this.categories.push(category)
     },
     deleteCategory(category: string): void {
       this.categories = this.categories.filter((item: string) => {
