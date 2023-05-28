@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import type { Product } from '@/types'
 import SelectComponent from '../SelectComponent.vue'
 import { useProductStore } from '../../stores/ProductStore'
+import { useCategoryStore } from '@/stores/Сategories'
 import { watch } from 'vue'
 
 const emit = defineEmits<{
@@ -17,6 +18,7 @@ const returnFilterProducts = (): void => {
 }
 //VAR
 const productStore = useProductStore()
+const categoryStore = useCategoryStore()
 const productList = computed(() => productStore.getProductList)
 //FILTER VARS
 const selectCurrency = ref('zł')
@@ -43,10 +45,12 @@ const unwrappinElement = (text: string, items: any): string[] => [
 const changeCurrencies = (selectItem: string) => {
   selectCurrency.value = selectItem
   returnSelectCurrency()
-  productStore.changeCurrencies(selectCurrency.value)
+  productStore.changeCurrencyProduct(selectCurrency.value)
 }
-const selectAnimalsItems = unwrappinElement('All', productStore.animals)
-const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
+const selectAnimalsItems = computed(() => unwrappinElement('All', productStore.animals))
+const selectCategoryItems = computed(() =>
+  unwrappinElement('Wszystkie produkty', categoryStore.categories)
+)
 //COMPUTED
 
 const filteredProductList = computed(() =>
@@ -56,7 +60,7 @@ const filteredProductList = computed(() =>
     .filter(({ animal }) => animal.includes(selectAnimal.value))
 )
 //HOOKS
-watch(filteredProductList,()=>{
+watch(filteredProductList, () => {
   returnFilterProducts()
 })
 </script>

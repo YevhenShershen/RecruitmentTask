@@ -36,7 +36,7 @@ const unwrappinElement = (text: string, items: any): string[] => [
 ]
 const changeCurrencies = (selectItem: string) => {
   selectCurrency.value = selectItem
-  productStore.changeCurrencies(selectCurrency.value)
+  productStore.changeCurrencyProduct(selectCurrency.value)
 }
 const selectAnimalsItems = unwrappinElement('All', productStore.animals)
 const selectCategoryItems = unwrappinElement('Wszystkie produkty', productStore.categories)
@@ -61,8 +61,7 @@ const filteredProductList = computed(() =>
         v-model="filterProductText"
       ></v-text-field>
       <h2>Wybież kategorije domków</h2>
-      <SelectComponent :label="'waluta'"
-      :items="currency" @update:modelValue="changeCurrencies" />
+      <SelectComponent :label="'waluta'" :items="currency" @update:modelValue="changeCurrencies" />
       <SelectComponent
         :label="'kategorije'"
         :items="selectCategoryItems"
