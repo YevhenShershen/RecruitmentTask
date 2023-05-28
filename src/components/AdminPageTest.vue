@@ -12,13 +12,12 @@ const headers = [...Object.keys(productStore.products[0]), 'Actions'].filter(
 )
 const showModal = ref(false)
 const product = ref('')
-const currency = productStore.currencies.map((item) => {
-  return item.value
-})
+// const currency = productStore.currencies.map((item) => {
+//   return item.value
+// })
 
 //METHODS
 const changeCurrentProduct = (element: Product): void => {
-  console.log(element)
   showModal.value = true
   product.value = element
 }

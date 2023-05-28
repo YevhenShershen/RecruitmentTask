@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useProductStore } from '../stores/ProductStore'
 import type { Product } from '@/types'
-import { useRoute } from 'vue-router'
 import FilterComponent from './admin-page/FilterComponent.vue'
 import ProductTable from './product-page/ProductTable.vue'
 import AddCategory from './admin-page/AddCategory.vue'
@@ -37,7 +36,6 @@ const getFilterProducts = (item: Product[]): void => {
   productList.value = item
 }
 //COMPUTED
-const path = computed(() => useRoute().path)
 </script>
 
 <template>

@@ -25,7 +25,6 @@ const newProduct = (): void => {
   showModal.value = true
 }
 const changeCurrentProduct = (element: Product): void => {
-  console.log(element)
   showModal.value = true
   product.value = element
 }
