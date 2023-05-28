@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia'
-import type { Product, Currencies } from '@/types'
-import { CATEGORIES, ANIMALS } from '../constants/constants'
+import type { Product, Currency } from '@/types'
+import { Categories, Animals } from '../enums/enums'
 import CURRENCIES from '../constants/currencies'
-
 type ProductList = {
   products: Product[]
-  currencies: Currencies[]
+  currencies: Currency[]
   categories: string[]
   animals: string[]
 }
@@ -15,56 +14,56 @@ export const useProductStore = defineStore('ProductStore', {
       {
         id: window.crypto.randomUUID(),
         name: 'Podwójny dom dla kotów',
-        category: CATEGORIES.EARTH_HOUSES,
+        category: Categories.EARTH_HOUSES,
         price: 55,
-        animal: ANIMALS.CAT
+        animal: Animals.CAT
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Wielki dom dla psów',
-        category: CATEGORIES.TREE_HOUSES,
+        category: Categories.TREE_HOUSES,
         price: 77,
-        animal: ANIMALS.DOG
+        animal: Animals.DOG
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla ptaka',
-        category: CATEGORIES.TREE_HOUSES,
+        category: Categories.TREE_HOUSES,
         price: 55.03,
-        animal: ANIMALS.BIRD
+        animal: Animals.BIRD
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla małego pieska',
-        category: CATEGORIES.EARTH_HOUSES,
+        category: Categories.EARTH_HOUSES,
         price: 77,
-        animal: ANIMALS.DOG
+        animal: Animals.DOG
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Plastikowy dom',
-        category: CATEGORIES.TREE_HOUSES,
+        category: Categories.TREE_HOUSES,
         price: 55.6,
-        animal: ANIMALS.CAT
+        animal: Animals.CAT
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Dom dla małych ptaków',
-        category: CATEGORIES.EARTH_HOUSES,
+        category: Categories.EARTH_HOUSES,
         price: 7,
-        animal: ANIMALS.BIRD
+        animal: Animals.BIRD
       },
       {
         id: window.crypto.randomUUID(),
         name: 'Domek w górach dla ptaka VIP',
-        category: CATEGORIES.EARTH_HOUSES,
+        category: Categories.EARTH_HOUSES,
         price: 27,
-        animal: ANIMALS.BIRD
+        animal: Animals.BIRD
       }
     ],
     currencies: CURRENCIES,
-    categories: Object.values(CATEGORIES),
-    animals: Object.values(ANIMALS)
+    categories: Object.values(Categories),
+    animals: Object.values(Animals)
   }),
   getters: {
     getProductList: (state: ProductList): Product[] => state.products,
@@ -74,7 +73,7 @@ export const useProductStore = defineStore('ProductStore', {
       state.products.sort((a, b) => (b.price > a.price ? 1 : -1))
   },
   actions: {
-    changeCurrencies(currency: String): void {
+    changeCurrencyProduct(currency: String): void {
       const changeCurrency = this.currencies.find((el) => el.value === currency)
       this.products = this.products.map(({ price, ...items }) => ({
         ...items,
@@ -93,9 +92,7 @@ export const useProductStore = defineStore('ProductStore', {
     },
     changeProduct(product: Product): void {
       let idItem = this.products.findIndex((item) => item.id === product.id)
-      console.log(idItem)
       this.products.splice(idItem, 1, product)
-      console.log(product)
     }
   }
 })

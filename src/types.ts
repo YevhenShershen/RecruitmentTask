@@ -7,7 +7,7 @@ export type Product = {
   conversion?: number
 }
 
-export type Currencies = {
+export type Currency = {
   course: number
   value: string
 }
