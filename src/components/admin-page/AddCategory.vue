@@ -3,9 +3,15 @@ import { ref } from 'vue'
 import { useCategoryStore } from '../../stores/Сategories'
 const category = ref('')
 const categoryStore = useCategoryStore()
+const errorMessage = ref('')
 const addCategory = (item: string): void => {
-  categoryStore.addCategory(item)
-  category.value = ''
+  if (!!item) {
+    categoryStore.addCategory(item)
+    category.value = ''
+    errorMessage.value = ''
+  } else {
+    errorMessage.value = 'Nie można dodać puste pole'
+  }
 }
 </script>
 
@@ -16,6 +22,7 @@ const addCategory = (item: string): void => {
       label="dodaj kategorije"
       type="text"
       hide-details="auto"
+      :error-messages="errorMessage"
     ></v-text-field>
     <v-btn class="ml-5" @click="addCategory(category)">Dodaj kategorije</v-btn>
   </div>
