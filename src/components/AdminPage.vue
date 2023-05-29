@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useProductStore } from '../stores/ProductStore'
 import type { Product } from '@/types'
 import FilterComponent from './admin-page/FilterComponent.vue'
-import ProductTable from './product-page/ProductTable.vue'
+import ProductTable from './admin-page/ProductTable.vue'
 import AddCategory from './admin-page/AddCategory.vue'
 import ModalWindow from './admin-page/ModalWindow.vue'
 //VAR

@@ -8,7 +8,6 @@ import { RouterLink, RouterView } from 'vue-router'
       <header>
         <div class="wrapper">
           <nav class="d-flex justify-center">
-            <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/admin">Admin</RouterLink>
           </nav>
         </div>
