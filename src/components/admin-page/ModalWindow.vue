@@ -47,8 +47,8 @@ const addProduct = (): void => {
       .some((e: boolean) => e === false)
   )
     return
-  currencyStore.changeCurrentCurrency('zł')
-  productStore.changeCurrencyProduct('zł')
+  currencyStore.changeCurrentCurrency(currencyStore.getMainCurrencyProject)
+  productStore.changeCurrencyProduct(currencyStore.getMainCurrencyProject)
   productStore.addProduct({
     id: window.crypto.randomUUID(),
     name: propsProduct.value.name,

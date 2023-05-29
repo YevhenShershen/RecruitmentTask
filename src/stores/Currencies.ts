@@ -3,6 +3,7 @@ import type { Currency } from '../types'
 type CurrencyList = {
   currencies: Currency[]
   currentCurrency: string
+  mainCurrencyProject: string
 }
 export const useCurrencyStore = defineStore('CurrencyList', {
   state: (): CurrencyList => ({
@@ -20,11 +21,14 @@ export const useCurrencyStore = defineStore('CurrencyList', {
         value: '€'
       }
     ],
-    currentCurrency: 'zł'
+    currentCurrency: 'zł',
+    mainCurrencyProject: 'zł'
   }),
   getters: {
-    getCurrenciesList: (state: CurrencyList): Currency[] => state.currencies
+    getCurrenciesList: (state: CurrencyList): Currency[] => state.currencies,
+    getMainCurrencyProject: (state: CurrencyList): string => state.mainCurrencyProject
   },
+
   actions: {
     changeCurrentCurrency(item: string): void {
       this.currentCurrency = item

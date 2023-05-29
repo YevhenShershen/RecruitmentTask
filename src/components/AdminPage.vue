@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useProductStore } from '../stores/ProductStore'
+import { useCurrencyStore } from '../stores/Currencies'
 import type { Product } from '@/types'
 import FilterComponent from './admin-page/FilterComponent.vue'
 import ProductTable from './admin-page/ProductTable.vue'
@@ -8,9 +9,10 @@ import AddCategory from './admin-page/AddCategory.vue'
 import ModalWindow from './admin-page/ModalWindow.vue'
 //VAR
 const productStore = useProductStore()
+const currencyStore = useCurrencyStore()
 const showModal = ref(false)
 const product = ref('')
-const currency = ref('zł')
+const currency = ref(currencyStore.getMainCurrencyProject)
 const productList = ref(productStore.products)
 //METHODS
 const closeModalWindow = (): void => {

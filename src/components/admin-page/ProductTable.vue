@@ -64,7 +64,7 @@ const sortProductPrice = () => {
       <h2>Tabelia produktów</h2>
       <div class="d-flex">
         <v-btn class="product-table__sort px-2" @click="sortProductPrice">
-          Sortowanie Ceny {{ price }}{{ currencyStore.currentCurrency }}
+          Sortowanie Ceny {{ price }}
         </v-btn>
         <v-btn v-if="observationPage.value" @click="newProduct()">Nowy produkt</v-btn>
       </div>

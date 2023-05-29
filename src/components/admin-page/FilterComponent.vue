@@ -24,7 +24,7 @@ const productList = computed(() => productStore.getProductList)
 
 const findElInput = ref<HTMLInputElement | null>(null)
 //FILTER VARS
-const selectCurrency = ref('zł')
+const selectCurrency = ref(currencyStore.getMainCurrencyProject)
 const selectCategory = ref('')
 const filterProductText = ref('')
 const selectAnimal = ref('')
