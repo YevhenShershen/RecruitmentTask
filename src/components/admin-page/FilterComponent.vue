@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import type { Product } from '@/types'
 import SelectComponent from '../SelectComponent.vue'
 import { useProductStore } from '../../stores/ProductStore'
 import { useCategoryStore } from '@/stores/Сategories'
 import { useCurrencyStore } from '../../stores/Currencies'
-import { watch } from 'vue'
 
 const emit = defineEmits<{
   (e: 'return-select-currency', item: string): void
@@ -22,6 +21,8 @@ const productStore = useProductStore()
 const categoryStore = useCategoryStore()
 const currencyStore = useCurrencyStore()
 const productList = computed(() => productStore.getProductList)
+
+const findElInput = ref<HTMLInputElement | null>(null)
 //FILTER VARS
 const selectCurrency = ref('zł')
 const selectCategory = ref('')
@@ -66,6 +67,9 @@ const filteredProductList = computed(() =>
 watch(filteredProductList, () => {
   returnFilterProducts()
 })
+onMounted(() => {
+  findElInput.value?.focus()
+})
 </script>
 
 <template>
@@ -75,6 +79,7 @@ watch(filteredProductList, () => {
       type="text"
       hide-details="auto"
       v-model="filterProductText"
+      ref="findElInput"
     ></v-text-field>
     <SelectComponent :label="'waluta'" :items="currencies" @update:modelValue="changeCurrencies" />
     <SelectComponent

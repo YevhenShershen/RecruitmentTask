@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import type { Product } from '@/types'
 import { useProductStore } from '../../stores/ProductStore'
 import { useCurrencyStore } from '../../stores/Currencies'
@@ -21,6 +21,7 @@ const propsProduct = ref({
   price: isProduct ? props.product.price : '',
   animal: isProduct ? props.product.animal : ''
 })
+const productNameInput = ref<HTMLInputElement | null>(null)
 //UPDATE DATA
 const getSelectCategory = (item: string): void => {
   propsProduct.value.category = item
@@ -69,6 +70,9 @@ const onUpdate = (): void => {
   resetPropsProduct()
   props.closeModal()
 }
+onMounted(() => {
+  productNameInput.value?.focus()
+})
 </script>
 
 <template>
@@ -86,6 +90,7 @@ const onUpdate = (): void => {
           hide-details="auto"
           v-model.trim="propsProduct.name"
           required
+          ref="productNameInput"
         ></v-text-field>
         <v-text-field
           name="price"
